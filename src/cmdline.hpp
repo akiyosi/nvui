@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QPixmap>
-#include <msgpack.hpp>
+#include "msgpack.hpp"
 #include <optional>
 #include "hlstate.hpp"
 #include "cursor.hpp"
