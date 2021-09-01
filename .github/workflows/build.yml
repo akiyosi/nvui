@@ -11,13 +11,17 @@ jobs:
           submodules: 'recursive'
       - name: Install lib
         run: brew install fmt boost qt@5 catch2 msgpack
-      - name: GCC
+      - name: Update clang
         run: |
-          brew install llvm
+          brew update
+          brew upgrade llvm
+      - name: configure
+        run: |
       - name: Build nvui and nvui_test in Debug mode
         run: |
           # sudo ln -sf /usr/local/opt/msgpack /usr/local/include/msgpack
           # sudo ln -sf /usr/local/opt/msgpack/include/msgpack.hpp /usr/local/include/msgpack.hpp
+          export CXX="/usr/local/opt/llvm/bin/clang++" # Switch Clang
           ls -l /usr/local/Cellar/msgpack/3.3.0/include/msgpack.hpp
           sudo ln -sf /usr/local/Cellar/msgpack/3.3.0_1/include/msgpack.hpp /usr/local/include/msgpack.hpp
           sudo ln -sf /usr/local/Cellar/qt@5.15.2/plugins /usr/local/plugins
