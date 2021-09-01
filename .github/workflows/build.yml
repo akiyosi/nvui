@@ -10,7 +10,7 @@ jobs:
         with:
           submodules: 'recursive'
       - name: Install lib
-        run: brew install fmt boost qt@5 catch2 msgpack
+        run: brew install fmt boost qt@5 catch2 msgpack tree
       - name: Update clang
         run: |
           brew update
@@ -38,7 +38,7 @@ jobs:
         with:
           name: nvui-darwin
           if-no-files-found: ignore
-          path: build/packaged
+          path: build/nvui
   linux:
     runs-on: ubuntu-latest
     strategy:
