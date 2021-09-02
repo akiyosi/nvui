@@ -10,29 +10,28 @@ jobs:
         with:
           submodules: 'recursive'
       - name: Install lib
-        run: brew install fmt boost qt@5 catch2 msgpack tree
-      - name: Update clang
         run: |
           brew update
+          brew install fmt boost qt@5 catch2 msgpack
+      - name: Update clang
+        run: |
           brew upgrade llvm
+      - name: check
+        continue-on-error: true
+        run: |
+          ls -l /usr/local/Cellar/msgpack/
+          ls -l /usr/local/Cellar/msgpack/3.3.0/include/msgpack.hpp
       - name: Build nvui and nvui_test in Debug mode
         run: |
           # sudo ln -sf /usr/local/opt/msgpack /usr/local/include/msgpack
           # sudo ln -sf /usr/local/opt/msgpack/include/msgpack.hpp /usr/local/include/msgpack.hpp
           export CXX="/usr/local/opt/llvm/bin/clang++" # Switch Clang
-          # ls -l /usr/local/Cellar/msgpack/3.3.0/include/msgpack.hpp
           sudo ln -sf /usr/local/Cellar/msgpack/3.3.0_1/include/msgpack.hpp /usr/local/include/msgpack.hpp
           sudo ln -sf /usr/local/Cellar/qt@5.15.2/plugins /usr/local/plugins
-          # cp -p /usr/local/Cellar/msgpack/3.3.0/include/msgpack.hpp src/
+          cp -p /usr/local/Cellar/msgpack/3.3.0/include/msgpack.hpp src/
           # Qt5Svg_DIR="/usr/local/Cellar/qt@5/5.15.2/lib/cmake/Qt5Svg" Qt5Widgets_DIR="/usr/local/Cellar/qt@5/5.15.2/lib/cmake/Qt5Widgets" Qt5Gui_DIR="/usr/local/Cellar/qt@5/5.15.2/lib/cmake/Qt5Gui" Qt5Core_DIR="/usr/local/Cellar/qt@5/5.15.2/lib/cmake/Qt5Core" msgpack_DIR="/usr/local/Cellar/msgpack/3.3.0/lib/cmake/msgpack"  fmt_DIR="/usr/local/Cellar/fmt/8.0.1" cmake -B build . -DCMAKE_CXX_FLAGS=-I\ /usr/local/include -DCMAKE_BUILD_TYPE=Release
           Qt5Svg_DIR="/usr/local/Cellar/qt@5/5.15.2/lib/cmake/Qt5Svg" Qt5Widgets_DIR="/usr/local/Cellar/qt@5/5.15.2/lib/cmake/Qt5Widgets" Qt5Gui_DIR="/usr/local/Cellar/qt@5/5.15.2/lib/cmake/Qt5Gui" Qt5Core_DIR="/usr/local/Cellar/qt@5/5.15.2/lib/cmake/Qt5Core" msgpack_DIR="/usr/local/Cellar/msgpack/3.3.0/lib/cmake/msgpack"  fmt_DIR="/usr/local/Cellar/fmt/8.0.1" cmake -B build . -DCMAKE_BUILD_TYPE=Release
           cmake --build build --target nvui --config Release
-      - name: check
-        run: |
-          ls -l build
-      - name: check 2
-        run: |
-          tree build
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
