@@ -12,7 +12,7 @@ jobs:
       - name: Install lib
         run: |
           brew update
-          brew install fmt boost qt@5 catch2 msgpack tree
+          brew install fmt boost qt@5 catch2 msgpack msgpack-tools tree
       - name: Update clang
         run: |
           brew upgrade llvm
