@@ -16,15 +16,14 @@ jobs:
       - name: Update clang
         run: |
           brew upgrade llvm
-      - name: check
-        continue-on-error: true
-        run: |
-          ls -l /usr/local/Cellar/msgpack/
-          ls -l /usr/local/Cellar/msgpack/3.3.0/include/msgpack.hpp
+      # - name: check
+      #   continue-on-error: true
+      #   run: |
+      #     echo "::set-output name=MSGPACK_VERSION::$(ls /usr/local/Cellar/msgpack/)"
       - name: Build nvui and nvui_test in Debug mode
         run: |
-          # sudo ln -sf /usr/local/opt/msgpack /usr/local/include/msgpack
-          # sudo ln -sf /usr/local/opt/msgpack/include/msgpack.hpp /usr/local/include/msgpack.hpp
+          sudo ln -sf /usr/local/opt/msgpack /usr/local/include/msgpack
+          sudo ln -sf /usr/local/opt/msgpack/include/msgpack.hpp /usr/local/include/msgpack.hpp
           export CXX="/usr/local/opt/llvm/bin/clang++" # Switch Clang
           ## sudo ln -sf /usr/local/Cellar/msgpack/3.3.0_1/include/msgpack.hpp /usr/local/include/msgpack.hpp
           ## sudo ln -sf /usr/local/Cellar/qt@5.15.2/plugins /usr/local/plugins
